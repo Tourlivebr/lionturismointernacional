@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import TourismSection from '../components/TourismSection.astro';
+import PackagesSection from '../components/PackagesSection.astro';
+import GroupSection from '../components/GroupSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title={siteConfig.slogan}
+  description={`${siteConfig.companyName} — ${siteConfig.positioning.description}`}
+>
+  <Hero />
+  <About />
+  <TourismSection />
+  <PackagesSection />
+  <GroupSection />
+  <ContactSection />
+</BaseLayout>

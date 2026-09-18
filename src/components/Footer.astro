@@ -1,0 +1,128 @@
+---
+import { siteConfig } from '../config/site';
+import Icons from './Icons.astro';
+---
+
+<footer class="bg-dark-950 border-t border-gold-500/10 pt-16 pb-8">
+  <div class="container-page">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div class="lg:col-span-2">
+        <a href="#topo" class="flex items-center gap-3 mb-6 group">
+          <div class="w-12 h-12 flex items-center justify-center border-2 border-gold-500 rounded-full group-hover:bg-gold-500/10 transition-colors">
+            <span class="font-serif text-gold-400 font-bold text-2xl">L</span>
+          </div>
+          <div>
+            <span class="font-serif text-white font-bold text-xl leading-tight block">
+              {siteConfig.companyName.split(' ')[0]} Turismo
+            </span>
+            <span class="text-xs text-gold-400/80 tracking-widest uppercase">
+              Internacional
+            </span>
+          </div>
+        </a>
+        <p class="text-gray-400 leading-relaxed max-w-md mb-6">
+          {siteConfig.positioning.description}
+        </p>
+        <div class="flex items-center gap-4">
+          <a
+            href={siteConfig.contact.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            class="w-10 h-10 border border-gold-500/30 rounded-full flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-dark transition-colors"
+          >
+            <Icons name="whatsapp" class="w-5 h-5" />
+          </a>
+          <a
+            href={`mailto:${siteConfig.contact.email}`}
+            aria-label="E-mail"
+            class="w-10 h-10 border border-gold-500/30 rounded-full flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-dark transition-colors"
+          >
+            <Icons name="mail" class="w-5 h-5" />
+          </a>
+          <a
+            href={siteConfig.contact.instagramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            class="w-10 h-10 border border-gold-500/30 rounded-full flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-dark transition-colors"
+          >
+            <Icons name="instagram" class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-serif text-white font-bold mb-5 text-lg">Navegação</h4>
+        <ul class="space-y-3">
+          <li>
+            <a href="#quem-somos" class="text-gray-400 hover:text-gold-400 transition-colors text-sm">
+              Quem Somos
+            </a>
+          </li>
+          <li>
+            <a href="#turismo" class="text-gray-400 hover:text-gold-400 transition-colors text-sm">
+              Turismo
+            </a>
+          </li>
+          <li>
+            <a href="#pacotes" class="text-gray-400 hover:text-gold-400 transition-colors text-sm">
+              Pacotes
+            </a>
+          </li>
+          <li>
+            <a href="#grupo" class="text-gray-400 hover:text-gold-400 transition-colors text-sm">
+              O Grupo
+            </a>
+          </li>
+          <li>
+            <a href="#contato" class="text-gray-400 hover:text-gold-400 transition-colors text-sm">
+              Contato
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-serif text-white font-bold mb-5 text-lg">Contato</h4>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <Icons name="phone" class="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5" />
+            <a
+              href={siteConfig.contact.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-gold-400 transition-colors text-sm"
+            >
+              {siteConfig.contact.whatsapp}
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icons name="mail" class="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5" />
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              class="text-gray-400 hover:text-gold-400 transition-colors text-sm break-all"
+            >
+              {siteConfig.contact.email}
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icons name="map-pin" class="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5" />
+            <span class="text-gray-400 text-sm">
+              {siteConfig.contact.address}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-gold-500/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-gray-500 text-center sm:text-left">
+        &copy; {new Date().getFullYear()} {siteConfig.companyName}. Todos os direitos reservados.
+      </p>
+      <p class="text-xs text-gray-500 italic">
+        &ldquo;{siteConfig.slogan}&rdquo;
+      </p>
+    </div>
+  </div>
+</footer>

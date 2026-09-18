@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    @apply bg-dark text-gray-100 antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  ::selection {
+    @apply bg-gold-500/40 text-white;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-br from-gold-300 via-gold-400 to-gold-600 text-dark-900 font-semibold tracking-wide
+           hover:from-gold-200 hover:via-gold-300 hover:to-gold-500
+           shadow-gold hover:shadow-gold-sm
+           border border-gold-300/50;
+  }
+
+  .btn-gold-outline {
+    @apply bg-dark-800/60 backdrop-blur text-gold-300 font-semibold tracking-wide
+           border-2 border-gold-400/70
+           hover:bg-gold-500/10 hover:border-gold-300 hover:text-gold-200;
+  }
+
+  .btn-primary {
+    @apply bg-gold-500 text-dark hover:bg-gold-400 focus:ring-gold-500 shadow-lg shadow-gold-500/20;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-800 text-white border border-gold-500/30 hover:bg-dark-700 hover:border-gold-500/50 focus:ring-gold-500;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-gold-400 border-2 border-gold-500/60 hover:bg-gold-500/10 hover:border-gold-400 hover:text-gold-300 focus:ring-gold-500;
+  }
+
+  .btn-whatsapp {
+    @apply bg-green-600 text-white hover:bg-green-500 focus:ring-green-500;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif text-white font-bold tracking-tight;
+  }
+
+  .section-title-gold {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif text-gold-400 font-bold tracking-tight;
+  }
+
+  .gold-line {
+    @apply h-[2px] w-20 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600;
+  }
+
+  .container-page {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .logo-script {
+    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    background: linear-gradient(135deg, #FFE08A 0%, #FFCB4C 30%, #E5A01A 55%, #FFB627 80%, #FFE08A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 14px rgba(229, 160, 26, 0.35));
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 bg-clip-text text-transparent;
+  }
+}
