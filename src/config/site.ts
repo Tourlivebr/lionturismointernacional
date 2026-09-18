@@ -81,7 +81,7 @@ export const siteConfig = {
 
   seo: {
     siteName: 'Lion Turismo Internacional',
-    siteUrl: 'https://lionturismointernacional.com.br',
+    siteUrl: 'https://lionturismointernacional.com',
     defaultTitle: 'Lion Turismo Internacional | Gramado para todos',
     titleTemplate: '%s | Lion Turismo Internacional',
     description:
@@ -117,7 +117,7 @@ export const siteConfig = {
     ],
     author: 'Lion Turismo Internacional',
     locale: 'pt_BR',
-    canonical: 'https://lionturismointernacional.com.br/',
+    canonical: 'https://lionturismointernacional.com/',
     ogImage: '/img/lion_hero.png',
     ogImageAlt: 'Lion Turismo Internacional - Gramado para todos',
     twitterHandle: '@lionturismo',
