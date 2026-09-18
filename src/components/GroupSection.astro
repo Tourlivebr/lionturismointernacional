@@ -39,7 +39,9 @@ const otherAreas = siteConfig.businessAreas.filter((a) => !a.highlighted);
           <p class="text-gray-400 text-sm leading-relaxed mb-4">{area.description}</p>
 
           <a
-            href="#contato"
+            href={area.link ?? '#contato'}
+            target={area.link?.startsWith('http') ? '_blank' : undefined}
+            rel={area.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
             class="inline-flex items-center gap-2 text-gold-400 text-sm hover:text-gold-300 transition-colors"
           >
             Saiba mais

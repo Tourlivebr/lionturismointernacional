@@ -12,6 +12,7 @@ export interface BusinessArea {
   description: string;
   icon: string;
   highlighted?: boolean;
+  link?: string;
 }
 
 export interface ContactData {
@@ -86,24 +87,28 @@ export const siteConfig = {
       description:
         'Imóveis residenciais e comerciais na Serra Gaúcha para quem quer morar, investir ou ter um refúgio de inverno.',
       icon: 'home',
+      link: 'https://wa.me/5554991308073?text=Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20Im%C3%B3veis!',
     },
     {
       title: 'Beleza',
       description:
         'Experiências de beleza e bem-estar com serviços premium para complementar sua estadia na Serra Gaúcha.',
       icon: 'sparkle',
+      link: 'https://wa.me/5554991308073?text=Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20Beleza%20e%20bem%20estar!',
     },
     {
       title: 'Veículos',
       description:
         'Veículos de qualidade para quem busca mobilidade, conforto e segurança durante toda a sua viagem.',
       icon: 'car',
+      link: 'https://wa.me/5554991308073?text=Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20Loca%C3%A7%C3%A3o%20de%20carros%20com%20e%20sem%20motorista!',
     },
     {
       title: 'Outras empresas',
       description:
         'Soluções multimarcas que conectam você a diferentes oportunidades em Gramado e região.',
       icon: 'building',
+      link: 'https://wa.me/5554991308073?text=Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20Solu%C3%A7%C3%B5es%20Multimarcas!',
     },
   ] as BusinessArea[],
 
