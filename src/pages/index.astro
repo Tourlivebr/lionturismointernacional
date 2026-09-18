@@ -6,12 +6,105 @@ import TourismSection from '../components/TourismSection.astro';
 import GroupSection from '../components/GroupSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { siteConfig } from '../config/site';
+
+const seo = siteConfig.seo;
+const contact = siteConfig.contact;
+
+const landingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LandingPage',
+  name: `${siteConfig.companyName} — ${siteConfig.slogan}`,
+  headline: `${siteConfig.slogan} — ${seo.description}`,
+  description: seo.longDescription,
+  url: seo.siteUrl,
+  inLanguage: 'pt-BR',
+  author: {
+    '@type': 'Organization',
+    name: siteConfig.companyName,
+    url: seo.siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.companyName,
+    url: seo.siteUrl,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': seo.siteUrl,
+  },
+  image: `${seo.siteUrl}${seo.ogImage}`,
+  datePublished: '2026-01-01T00:00:00-03:00',
+  dateModified: new Date().toISOString(),
+  keywords: seo.keywords.join(', '),
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    url: `${seo.siteUrl}${seo.ogImage}`,
+    width: 1200,
+    height: 630,
+    caption: seo.ogImageAlt,
+  },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    xpath: [
+      '/html/head/title',
+      '/html/head/meta[@name=\'description\']/@content',
+    ],
+    cssSelector: ['[data-speakable="headline"]', '[data-speakable="description"]'],
+  },
+  significantLinks: [
+    `${seo.siteUrl}#topo`,
+    `${seo.siteUrl}#quem-somos`,
+    `${seo.siteUrl}#turismo`,
+    `${seo.siteUrl}#grupo`,
+    `${seo.siteUrl}#contato`,
+    seo.whatsappBusiness.link,
+  ],
+  about: {
+    '@type': 'City',
+    name: 'Gramado',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Gramado',
+      addressRegion: 'RS',
+      addressCountry: 'BR',
+    },
+  },
+  mentions: [
+    { '@type': 'City', name: 'Gramado' },
+    { '@type': 'City', name: 'Canela' },
+    { '@type': 'AdministrativeArea', name: 'Serra Gaúcha' },
+    { '@type': 'Country', name: 'Brasil' },
+  ],
+};
 ---
 
 <BaseLayout
-  title={siteConfig.slogan}
-  description={`${siteConfig.companyName} — ${siteConfig.positioning.description}`}
+  title="Gramado para todos"
+  description="Lion Turismo Internacional é uma agência familiar em Gramado/RS com pacotes de viagem, City Tour com veículo blindado e segurança para celebridades, ingressos, passaporte, imóveis, beleza e locação de carros — tudo em até 48x no cartão e atendimento WhatsApp (54) 99130-8073."
+  image="/img/lion_hero.png"
+  canonical={seo.canonical}
+  type="website"
+  keywords={[
+    'agencia turismo gramado',
+    'viagem gramado',
+    'pacote turisco gramado',
+    'seguranca celebridades serra gaucha',
+    'veiculo blindado gramado',
+    'chocolate gratis city tour',
+    'bebidas gratis passeio gramado',
+    'ingressos 48 vezes cartao',
+    'empresa familiar gramado',
+    'lion turismo whatsapp',
+    'grupo multimarcas gramado',
+    'trabalhar em gramado',
+    'investir na serra gaucha',
+  ]}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(landingLd)} />
+
+  <div data-speakable="headline" class="hidden">{siteConfig.slogan} — {siteConfig.companyName}</div>
+  <div data-speakable="description" class="hidden">{seo.description}</div>
+
   <Hero />
   <About />
   <TourismSection />

@@ -1,0 +1,46 @@
+User-agent: *
+Allow: /
+Disallow: /404
+Disallow: /500
+
+User-agent: Googlebot
+Allow: /
+Disallow: /404
+Disallow: /500
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: WhatsAppBot
+Allow: /
+
+User-agent: MetaExternalFetcher
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Previne indexação de conteúdo duplicado
+Crawl-delay: 1
+
+# Sitemap principal
+Sitemap: https://lionturismointernacional.com.br/sitemap.xml
+Sitemap: https://lionturismointernacional.com.br/robots.txt

@@ -7,22 +7,323 @@ import { siteConfig } from '../config/site';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  noindex?: boolean;
+  keywords?: string[];
 }
 
-const { title, description } = Astro.props;
-const pageTitle = title ? `${title} | ${siteConfig.companyName}` : siteConfig.companyName;
-const pageDescription = description || siteConfig.positioning.description;
+const {
+  title,
+  description,
+  image,
+  canonical,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+  keywords: pageKeywords,
+} = Astro.props;
+
+const seo = siteConfig.seo;
+const contact = siteConfig.contact;
+
+const pageTitle = title ? seo.titleTemplate.replace('%s', title) : seo.defaultTitle;
+const pageDescription = description || seo.description;
+const pageCanonical = canonical || (Astro.url?.href || seo.canonical);
+const pageImage = image ? (image.startsWith('http') ? image : `${seo.siteUrl}${image}`) : `${seo.siteUrl}${seo.ogImage}`;
+const pageKeywords = [
+  ...(pageKeywords ?? []),
+  ...seo.keywords,
+].slice(0, 40).join(', ');
+
+const robotsMeta = noindex
+  ? 'noindex, nofollow'
+  : [
+      seo.robots.index ? 'index' : 'noindex',
+      seo.robots.follow ? 'follow' : 'nofollow',
+      'max-snippet:' + (seo.robots.googleBot['max-snippet'] ?? -1),
+      'max-image-preview:' + (seo.robots.googleBot['max-image-preview'] ?? 'large'),
+      'max-video-preview:' + (seo.robots.googleBot['max-video-preview'] ?? -1),
+    ].join(', ');
+
+const sameAs = [
+  contact.instagramLink && contact.instagramLink !== '#' ? contact.instagramLink : null,
+  seo.social.facebookLink && seo.social.facebookLink !== '#' ? seo.social.facebookLink : null,
+  seo.social.youtubeLink && seo.social.youtubeLink !== '#' ? seo.social.youtubeLink : null,
+  seo.social.googleBusinessUrl && seo.social.googleBusinessUrl !== '#' ? seo.social.googleBusinessUrl : null,
+].filter(Boolean) as string[];
+
+const localBusinessLd = {
+  '@context': 'https://schema.org',
+  '@type': ['TravelAgency', 'LocalBusiness'],
+  name: siteConfig.companyName,
+  legalName: siteConfig.companyName,
+  description: seo.longDescription,
+  slogan: siteConfig.slogan,
+  url: seo.siteUrl,
+  image: `${seo.siteUrl}${siteConfig.logo}`,
+  logo: `${seo.siteUrl}${siteConfig.logo}`,
+  priceRange: '$$',
+  category: seo.category,
+  telephone: seo.whatsappBusiness.number,
+  whatsapp: seo.whatsappBusiness.link,
+  email: contact.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.address,
+    addressLocality: contact.addressLocality ?? 'Gramado',
+    addressRegion: contact.addressRegion ?? 'RS',
+    addressCountry: contact.addressCountry ?? 'BR',
+    postalCode: contact.postalCode ?? '95670-000',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: Number(contact.geoLat ?? -29.3766),
+    longitude: Number(contact.geoLng ?? -50.8737),
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Gramado', addressCountry: 'BR', addressRegion: 'RS' },
+    { '@type': 'City', name: 'Canela', addressCountry: 'BR', addressRegion: 'RS' },
+    { '@type': 'AdministrativeArea', name: 'Serra Gaúcha', addressCountry: 'BR', addressRegion: 'RS' },
+    { '@type': 'Country', name: 'Brasil' },
+  ],
+  sameAs,
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: seo.whatsappBusiness.number,
+      contactType: 'customer support',
+      areaServed: ['BR'],
+      availableLanguage: ['Portuguese', 'English', 'Spanish'],
+    },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      opens: '08:00',
+      closes: '22:00',
+    },
+  ],
+  makesOffer: siteConfig.businessAreas.map((area) => ({
+    '@type': 'Offer',
+    name: area.title,
+    description: area.description,
+    category: area.title,
+    url: area.link ?? `${seo.siteUrl}#grupo`,
+    availability: 'https://schema.org/InStock',
+  })),
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: seo.siteName,
+  url: seo.siteUrl,
+  description: seo.longDescription,
+  inLanguage: 'pt-BR',
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.companyName,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${seo.siteUrl}${siteConfig.logo}`,
+    },
+    url: seo.siteUrl,
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: seo.whatsappBusiness.number,
+        email: contact.email,
+        contactType: 'WhatsApp',
+        areaServed: 'BR',
+      },
+    ],
+  },
+  potentialAction: [
+    {
+      '@type': 'SearchAction',
+      target: `${seo.siteUrl}?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  ],
+};
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteConfig.companyName,
+  legalName: siteConfig.companyName,
+  url: seo.siteUrl,
+  logo: `${seo.siteUrl}${siteConfig.logo}`,
+  image: `${seo.siteUrl}${seo.ogImage}`,
+  description: seo.longDescription,
+  slogan: siteConfig.slogan,
+  email: contact.email,
+  telephone: seo.whatsappBusiness.number,
+  address: localBusinessLd.address,
+  sameAs,
+  foundingLocation: 'Gramado, RS, Brasil',
+  knowsAbout: [
+    'Turismo em Gramado',
+    'Pacotes de Viagem',
+    'City Tour',
+    'Veículo Blindado',
+    'Segurança para Celebridades',
+    'Ingressos para Parques',
+    'Imóveis na Serra Gaúcha',
+    'Locação de Veículos',
+    'Beleza e Bem Estar',
+    'Multimarcas',
+  ],
+  numberOfEmployees: {
+    '@type': 'QuantitativeValue',
+    value: '2-20',
+  },
+  keywords: seo.keywords.join(', '),
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Como falar com a Lion Turismo Internacional?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Você pode chamar a Lion Turismo Internacional diretamente pelo WhatsApp ${contact.whatsapp} no link ${seo.whatsappBusiness.link} ou enviar e-mail para ${contact.email}. Atendimento personalizado 7 dias por semana.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Quais serviços a Lion Turismo oferece em Gramado?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A Lion Turismo Internacional oferece pacotes personalizados para Gramado e Serra Gaúcha, City Tour com veículos de 5 e 7 lugares, van, ônibus e veículo blindado com segurança para celebridades, venda de ingressos e passaporte de passeios em até 48 vezes no cartão de crédito, imóveis, beleza e bem-estar e locação de carros com e sem motorista.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'City Tour em Gramado tem brindes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sim, os City Tours da Lion Turismo Internacional em Gramado e Serra Gaúcha contam com bebidas e chocolates grátis a bordo para os passageiros.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Posso parcelar ingressos de Gramado em quantas vezes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A Lion Turismo Internacional vende ingressos, passaporte e passeios de Gramado e Serra Gaúcha em até 48 vezes no cartão de crédito. Consulte condições diretamente no WhatsApp.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'A Lion Turismo Internacional tem atendimento para VIPs e celebridades?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sim, a Lion Turismo Internacional oferece veículo blindado e equipe de segurança treinada para autoridades, famílias VIPs, artistas e celebridades em Gramado e Serra Gaúcha.',
+      },
+    },
+  ],
+};
 ---
 
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={pageDescription} />
-    <meta name="theme-color" content="#0D0D0D" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
     <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content={pageKeywords} />
+    <meta name="author" content={seo.author} />
+    <meta name="robots" content={robotsMeta} />
+    <meta name="googlebot" content={robotsMeta} />
+    <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#141414" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="copyright" content={siteConfig.companyName} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="application-name" content={seo.siteName} />
+    <meta name="apple-mobile-web-app-title" content={seo.siteName} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="geo.region" content={`BR-${contact.addressRegion ?? 'RS'}`} />
+    <meta name="geo.placename" content={contact.addressLocality ?? 'Gramado'} />
+    <meta name="geo.position" content={`${contact.geoLat ?? '-29.3766'};${contact.geoLng ?? '-50.8737'}`} />
+    <meta name="ICBM" content={`${contact.geoLat ?? '-29.3766'}, ${contact.geoLng ?? '-50.8737'}`} />
+    <meta name="subject" content={`Agência de Turismo em ${contact.addressLocality ?? 'Gramado'}`} />
+    <meta name="rating" content="general" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="global" />
+
+    <link rel="canonical" href={pageCanonical} />
+    <link rel="alternate" hreflang="pt-BR" href={pageCanonical} />
+    <link rel="alternate" hreflang="en" href={pageCanonical} />
+    <link rel="alternate" hreflang="es" href={pageCanonical} />
+    <link rel="alternate" hreflang="x-default" href={pageCanonical} />
+
+    <meta property="og:site_name" content={seo.siteName} />
+    <meta property="og:locale" content={seo.locale} />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={pageCanonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={pageImage} />
+    <meta property="og:image:alt" content={seo.ogImageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:secure_url" content={pageImage} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    <meta property="article:publisher" content={seo.social.facebookLink && seo.social.facebookLink !== '#' ? seo.social.facebookLink : seo.siteUrl} />
+    <meta property="business:contact_data:street_address" content={contact.address} />
+    <meta property="business:contact_data:locality" content={contact.addressLocality ?? 'Gramado'} />
+    <meta property="business:contact_data:region" content={contact.addressRegion ?? 'RS'} />
+    <meta property="business:contact_data:postal_code" content={contact.postalCode ?? '95670-000'} />
+    <meta property="business:contact_data:country_name" content={contact.addressCountry ?? 'Brasil'} />
+    <meta property="business:contact_data:website" content={seo.siteUrl} />
+    <meta property="business:contact_data:email" content={contact.email} />
+    <meta property="business:contact_data:phone_number" content={seo.whatsappBusiness.number} />
+
+    <meta name="twitter:card" content={seo.twitterCard} />
+    <meta name="twitter:site" content={seo.twitterHandle} />
+    <meta name="twitter:creator" content={seo.twitterHandle} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={pageImage} />
+    <meta name="twitter:image:alt" content={seo.ogImageAlt} />
+    <meta name="twitter:widgets:new-embed-design" content="on" />
+    <meta name="twitter:dnt" content="on" />
+
+    <meta property="whatsapp:number" content={seo.whatsappBusiness.number} />
+    <meta property="whatsapp:link" content={seo.whatsappBusiness.link} />
+    <meta name="telephone" content={seo.whatsappBusiness.number} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,16 +331,20 @@ const pageDescription = description || siteConfig.positioning.description;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Great+Vibes&family=Dancing+Script:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://wa.me" />
+    <link rel="dns-prefetch" href="https://wa.me" />
+    <link rel="preconnect" href="https://api.whatsapp.com" />
+    <link rel="dns-prefetch" href="https://api.whatsapp.com" />
 
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-gold-500 focus:text-dark focus:top-2 focus:left-2"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-gold-500 focus:text-dark focus:top-2 focus:left-2 focus:rounded-sm focus:font-semibold"
     >
       Pular para o conteúdo
     </a>
