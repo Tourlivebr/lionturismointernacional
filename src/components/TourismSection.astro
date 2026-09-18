@@ -13,7 +13,7 @@ const highlights = [
     title: 'Hospedagem Premium',
     description:
       'Hóteis, pousadas e chalés selecionados, com opções para todos os perfis — de luxo a econômicas.',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=600',
+    image: 'img/coline.png',
   },
   {
     title: 'Atendimento Familiar',
@@ -206,8 +206,8 @@ const highlights = [
           <Icons name="whatsapp" class="w-5 h-5" />
           {siteConfig.buttons.whatsapp.label}
         </a>
-        <a href="#pacotes" class="btn btn-outline">
-          Ver pacotes
+        <a href={siteConfig.buttons.whatsapp.link} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+          {siteConfig.buttons.buildPackage.label}
         </a>
       </div>
     </div>

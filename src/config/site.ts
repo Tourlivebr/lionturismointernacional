@@ -14,15 +14,7 @@ export interface BusinessArea {
   highlighted?: boolean;
 }
 
-export interface Package {
-  title: string;
-  description: string;
-  price?: string;
-  features: string[];
-  highlight?: boolean;
-}
-
-export interface ButtonData {
+export interface ContactData {
   label: string;
   link: string;
   variant: 'primary' | 'secondary' | 'outline' | 'whatsapp';
@@ -33,8 +25,8 @@ export const siteConfig = {
   slogan: 'Gramado para todos.',
   institutionalPhrase: 'Gramado, a melhor cidade do Brasil, será apresentada ao mundo.',
 
-  logo: '/img/hero-bg.png',
-  institutionalImage: '/img/hero-bg.png',
+  logo: '/img/hero-bg1.png',
+  institutionalImage: '/img/hero-bg1.png',
 
   hero: {
     eyebrow: 'Gramado para todos',
@@ -47,14 +39,14 @@ export const siteConfig = {
       'Pacotes flexíveis',
       'Experiências únicas',
     ],
-    backgroundImage: '/img/hero-bg.png',
+    backgroundImage: '/img/hero-bg1.png',
     ctaPrimary: {
       label: 'Realize esse sonho',
       link: '#contato',
     },
     ctaSecondary: {
-      label: 'Conheça os pacotes',
-      link: '#pacotes',
+      label: 'Fale com a Lion',
+      link: '#contato',
     },
   },
 
@@ -115,46 +107,10 @@ export const siteConfig = {
     },
   ] as BusinessArea[],
 
-  packages: [
-    {
-      title: 'Essencial',
-      description: 'Para quem quer conhecer o essencial de Gramado com conforto.',
-      features: [
-        '3 noites de hospedagem',
-        'Café da manhã incluso',
-        'City tour panorâmico',
-        'Atendimento 24h',
-      ],
-    },
-    {
-      title: 'Premium',
-      description: 'Experiência completa com os melhores pontos turísticos.',
-      features: [
-        '5 noites de hospedagem',
-        'Pensão completa',
-        'Passeios guiadados',
-        'Jantar romântico',
-        'Atendimento personalizado',
-      ],
-      highlight: true,
-    },
-    {
-      title: 'Família',
-      description: 'Diversão garantida para toda a família.',
-      features: [
-        '4 noites em apto família',
-        'Pensão completa',
-        'Ingressos para parques',
-        'Atividades infantis',
-        'Transfert incluso',
-      ],
-    },
-  ] as Package[],
-
   buttons: {
     buildPackage: {
       label: 'Monte seu pacote',
-      link: '#pacotes',
+      link: 'https://wa.me/5554991308073',
       variant: 'primary',
     },
     talkToLion: {
