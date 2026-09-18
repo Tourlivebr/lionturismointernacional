@@ -25,7 +25,7 @@ export const siteConfig = {
   slogan: 'Gramado para todos.',
   institutionalPhrase: 'Gramado, a melhor cidade do Brasil, será apresentada ao mundo.',
 
-  logo: '/img/hero-bg1.png',
+  logo: '/img/logo_lion.png',
   institutionalImage: '/img/hero-bg1.png',
 
   hero: {

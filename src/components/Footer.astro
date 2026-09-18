@@ -7,18 +7,12 @@ import Icons from './Icons.astro';
   <div class="container-page">
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-7">
       <div class="lg:col-span-2">
-        <a href="#topo" class="flex items-center gap-3 mb-4 group">
-          <div class="w-10 h-10 flex items-center justify-center border-2 border-gold-500 rounded-full group-hover:bg-gold-500/10 transition-colors">
-            <span class="font-serif text-gold-400 font-bold text-xl">L</span>
-          </div>
-          <div>
-            <span class="font-serif text-white font-bold text-lg leading-tight block">
-              {siteConfig.companyName.split(' ')[0]} Turismo
-            </span>
-            <span class="text-[0.65rem] text-gold-400/80 tracking-[0.22em] uppercase">
-              Internacional
-            </span>
-          </div>
+        <a href="#topo" class="inline-flex items-center mb-4 group h-14" aria-label={siteConfig.companyName}>
+          <img
+            src={siteConfig.logo}
+            alt={siteConfig.companyName}
+            class="h-full w-auto object-contain"
+          />
         </a>
         <p class="text-gray-400 text-sm leading-relaxed max-w-md mb-4">
           {siteConfig.positioning.description}
