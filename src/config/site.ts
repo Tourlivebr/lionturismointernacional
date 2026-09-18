@@ -39,7 +39,7 @@ export const siteConfig = {
       'Pacotes flexíveis',
       'Experiências únicas',
     ],
-    backgroundImage: '/img/hero-bg1.png',
+    backgroundImage: '/img/lion_hero.png',
     ctaPrimary: {
       label: 'Realize esse sonho',
       link: '#contato',

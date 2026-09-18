@@ -72,12 +72,16 @@
   }
 
   .logo-script {
-    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    font-family: 'Dancing Script', 'Great Vibes', cursive;
+    line-height: 1.15 !important;
+    display: inline-block;
+    padding-top: 0.15em;
+    padding-bottom: 0.05em;
     background: linear-gradient(135deg, #FFE08A 0%, #FFCB4C 30%, #E5A01A 55%, #FFB627 80%, #FFE08A 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 14px rgba(229, 160, 26, 0.35));
+    filter: drop-shadow(0 2px 10px rgba(229, 160, 26, 0.3));
   }
 }
 

@@ -35,33 +35,37 @@ import Icons from './Icons.astro';
       </div>
 
       <div class="order-1 lg:order-2 relative">
-        <div class="relative aspect-[4/5] rounded-sm overflow-hidden border border-gold-500/20 bg-dark-900">
-          <img
-            src={siteConfig.institutionalImage}
-            alt={siteConfig.companyName}
-            loading="lazy"
-            class="w-full h-full object-contain"
-          />
-        </div>
+        <div class="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto">
+          <div
+            class="absolute -inset-3 bg-gradient-to-br from-gold-400/25 via-gold-600/10 to-transparent rounded-[2px] blur-xl opacity-70"
+            aria-hidden="true"
+          ></div>
 
-        <div class="absolute -bottom-6 -left-6 bg-dark border border-gold-500/30 p-6 shadow-xl hidden sm:block max-w-xs">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center flex-shrink-0">
-              <Icons name="suitcase" class="w-6 h-6 text-gold-400" />
-            </div>
-            <div>
-              <h4 class="font-serif text-gold-400 font-bold text-lg mb-1">
-                {siteConfig.slogan}
-              </h4>
-              <p class="text-sm text-gray-400">
-                Atendimento personalizado para cada perfil.
-              </p>
+          <div class="relative aspect-[4/5] w-full bg-dark-900">
+            <img
+              src={siteConfig.institutionalImage}
+              alt={siteConfig.companyName}
+              loading="lazy"
+              class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
+            />
+          </div>
+
+          <div class="absolute -bottom-6 -left-6 bg-dark border border-gold-500/30 p-6 shadow-xl hidden sm:block max-w-xs">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center flex-shrink-0">
+                <Icons name="suitcase" class="w-6 h-6 text-gold-400" />
+              </div>
+              <div>
+                <h4 class="font-serif text-gold-400 font-bold text-lg mb-1">
+                  {siteConfig.slogan}
+                </h4>
+                <p class="text-sm text-gray-400">
+                  Atendimento personalizado para cada perfil.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="absolute -top-4 -right-4 w-20 h-20 border-t-2 border-r-2 border-gold-500/40"></div>
-        <div class="absolute -bottom-4 -right-4 w-20 h-20 border-b-2 border-r-2 border-gold-500/40 hidden lg:block"></div>
       </div>
     </div>
   </div>
