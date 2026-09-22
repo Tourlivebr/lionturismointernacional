@@ -91,42 +91,7 @@ const doubleList = [...testimonials, ...testimonials];
         <span class="w-8 h-px bg-gold-500/25"></span>
       </p>
 
-      <div class="relative">
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 lg:w-32 z-10"
-          style="background-image: linear-gradient(to right, rgb(13 13 13) 0%, rgba(13,13,13,0.88) 40%, rgba(13,13,13,0) 100%);"
-        />
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 lg:w-32 z-10"
-          style="background-image: linear-gradient(to left, rgb(13 13 13) 0%, rgba(13,13,13,0.88) 40%, rgba(13,13,13,0) 100%);"
-        />
-
-        <button
-          type="button"
-          id="testimonials-prev"
-          class="group/btn absolute left-0 top-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-gold-500/60 bg-transparent flex items-center justify-center text-gold-400 hover:text-gold-200 hover:border-gold-300 hover:bg-gold-500/5 transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/60"
-          style="transform: translate(-50%, -50%);"
-          aria-label="Depoimento anterior"
-        >
-          <svg class="w-[15px] h-[15px] sm:w-[17px] sm:h-[17px] transition-transform group-hover/btn:-translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" />
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          id="testimonials-next"
-          class="group/btn absolute right-0 top-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-gold-500/60 bg-transparent flex items-center justify-center text-gold-400 hover:text-gold-200 hover:border-gold-300 hover:bg-gold-500/5 transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/60"
-          style="transform: translate(50%, -50%);"
-          aria-label="Próximo depoimento"
-        >
-          <svg class="w-[15px] h-[15px] sm:w-[17px] sm:h-[17px] transition-transform group-hover/btn:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" />
-          </svg>
-        </button>
-
+      <div>
         <div
           id="testimonials-track-wrapper"
           class="relative -mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto no-scrollbar snap-x py-2 sm:py-3 lg:py-4"
@@ -145,8 +110,8 @@ const doubleList = [...testimonials, ...testimonials];
                 data-slide={idx}
                 class={`group relative shrink-0 snap-start bg-dark-3/60 backdrop-blur-sm border rounded-2xl p-6 sm:p-7 transition-all duration-300 w-[85vw] sm:w-[440px] lg:w-[448px] h-full flex flex-col ${
                   isFeatured
-                    ? 'border-gold-400/40 shadow-[0_0_40px_-12px_rgba(229,160,26,0.35)] hover:-translate-y-0.5'
-                    : 'border-white/5 hover:border-gold-500/25 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-18px_rgba(229,160,26,0.25)]'
+                    ? 'border-gold-400/40'
+                    : 'border-white/5 hover:border-gold-500/25'
                 }`}
                 itemscope
                 itemtype="https://schema.org/Review"
@@ -344,8 +309,6 @@ const doubleList = [...testimonials, ...testimonials];
   (() => {
     const wrapper = document.getElementById('testimonials-track-wrapper') as HTMLElement | null;
     const track = document.getElementById('testimonials-track') as HTMLElement | null;
-    const prevBtn = document.getElementById('testimonials-prev') as HTMLButtonElement | null;
-    const nextBtn = document.getElementById('testimonials-next') as HTMLButtonElement | null;
     if (!wrapper || !track) return;
 
     const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
@@ -416,15 +379,6 @@ const doubleList = [...testimonials, ...testimonials];
       if (document.hidden) { pause(); rafId && cancelAnimationFrame(rafId); }
       else { lastT = 0; rafId = requestAnimationFrame(tick); resume(); }
     });
-
-    // ------------ manual buttons: smooth scroll ------------
-    const scrollByOne = (dir: 1 | -1) => {
-      const step = slideStep();
-      wrapper.scrollBy({ left: dir * step, behavior: 'smooth' });
-    };
-
-    prevBtn?.addEventListener('click', () => scrollByOne(-1));
-    nextBtn?.addEventListener('click', () => scrollByOne(1));
 
     // ------------ dots ------------
     dots.forEach((dot, idx) => {
