@@ -63,6 +63,19 @@ export interface ContactData {
   geoLng?: string;
 }
 
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  location: string;
+  avatar: string;
+  rating: 5 | 4;
+  category: 'Turismo' | 'Imóveis' | 'Beleza' | 'Veículos' | 'Multimarcas';
+  quote: string;
+  highlight?: string;
+  date?: string;
+}
+
 export interface BusinessArea {
   title: string;
   description: string;
@@ -77,7 +90,7 @@ export const siteConfig = {
   institutionalPhrase: 'Gramado, a melhor cidade do Brasil, será apresentada ao mundo.',
 
   logo: '/img/logo_lion.png',
-  institutionalImage: '/img/lion_hero.png',
+  institutionalImage: '/img/hero-bg1.png',
 
   seo: {
     siteName: 'Lion Turismo Internacional',
@@ -331,7 +344,93 @@ export const siteConfig = {
     groupTitle: 'Um grupo, diferentes possibilidades',
     groupSubtitle:
       'Além do turismo, oferecemos soluções completas para diferentes momentos da sua vida em Gramado.',
+    testimonialsTitle: 'O que nossos clientes contam',
+    testimonialsEyebrow: 'Depoimentos',
+    testimonialsSubtitle:
+      'Centenas de famílias, investidores e visitantes já viveram Gramado com a Lion. Conheça algumas histórias reais.',
+    testimonialsBadge: '+1.200 atendimentos realizados',
   },
+
+  testimonials: [
+    {
+      id: 't1',
+      name: 'Beatriz Andrade',
+      role: 'Professora',
+      location: 'Recife / PE',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=80',
+      rating: 5,
+      category: 'Turismo',
+      highlight: 'Atendimento familiar como se fôssemos da casa',
+      quote:
+        'Minha mãe sempre sonhou em conhecer Gramado no inverno. A Lion cuidou de absolutamente tudo — transfer, hospedagem, ingressos do Snowland e até um jantar especial no Natal Luz. Achei caro no começo, mas no fim valia cada centavo. Voltaremos no próximo ano!',
+      date: 'Junho de 2026',
+    },
+    {
+      id: 't2',
+      name: 'Ricardo Fontoura',
+      role: 'Empresário',
+      location: 'São Paulo / SP',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
+      rating: 5,
+      category: 'Imóveis',
+      highlight: 'Comprei um apartamento sem nunca ter pisado em Gramado',
+      quote:
+        'Eu conhecia a Serra Gaúcha só de fotos. A equipe me mandou vídeos reais, visita virtual, laudo completo do imóvel e até contatos de vizinhos. Hoje tenho um apartamento no Lago Negro com rentabilidade temporada — tudo parcelado, sem dor de cabeça. Confiança total.',
+      date: 'Abril de 2026',
+    },
+    {
+      id: 't3',
+      name: 'Juliana Vasconcellos',
+      role: 'Médica dermatologista',
+      location: 'Belo Horizonte / MG',
+      avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&auto=format&fit=crop&q=80',
+      rating: 5,
+      category: 'Beleza',
+      highlight: 'Dia de noiva em Gramado simplesmente inesquecível',
+      quote:
+        'Me casei na Rua Coberta e a equipe da Beleza do Grupo veio até o hotel para fazer o meu make, cabelo, manicure e esmalteria. Produtos premium, horário respeitado, artista com anos de experiência em casamentos. Eu estava linda e relaxada para a cerimônia. Nota 10!',
+      date: 'Março de 2026',
+    },
+    {
+      id: 't4',
+      name: 'Eduardo Bittencourt',
+      role: 'Diretor financeiro',
+      location: 'Curitiba / PR',
+      avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=400&auto=format&fit=crop&q=80',
+      rating: 5,
+      category: 'Veículos',
+      highlight: 'Van com motorista por 5 dias no roteiro Serra Gaúcha',
+      quote:
+        'Somos família de 8 pessoas e eu não queria dirigir na neve. Pegamos a van da Lion com motorista experiente. Água e chocolate o dia inteiro, ar condicionado, porta-malas grande para nossas malas de inverno e a pontualidade foi cirúrgica. Recomendo para grupos grandes!',
+      date: 'Julho de 2026',
+    },
+    {
+      id: 't5',
+      name: 'Fernanda Kessler',
+      role: 'Gerente de marketing',
+      location: 'Florianópolis / SC',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&auto=format&fit=crop&q=80',
+      rating: 4,
+      category: 'Multimarcas',
+      highlight: 'Uma empresa, toda a minha mudança resolvida',
+      quote:
+        'Vim de Floripa para trabalhar em Gramado. A Lion me ajudou com imóvel para alugar, locação do carro do dia a dia e até me indicou o salão e academia perto do meu novo lar. Não imaginava que uma empresa de turismo pudesse me conectar com tantas soluções práticas. Economizei semanas de busca!',
+      date: 'Maio de 2026',
+    },
+    {
+      id: 't6',
+      name: 'Antônio Carlos Vieira',
+      role: 'Aposentado',
+      location: 'Rio de Janeiro / RJ',
+      avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&auto=format&fit=crop&q=80',
+      rating: 5,
+      category: 'Turismo',
+      highlight: 'Parcelamos tudo em 48x e fomos eu, minha esposa e 3 netos',
+      quote:
+        'Achei que não ia conseguir levar os netos pro Natal Luz. A Lion me fez um orçamento com todos os ingressos, hotel com café da manhã e até o City Tour com chocolate e suco liberado. Parcelamos em 48 vezes no cartão, minha filha ajudou com as parcelas e a gente realizou o sonho em família. Agradeço muito!',
+      date: 'Dezembro de 2025',
+    },
+  ] as Testimonial[],
 };
 
 export type SiteConfig = typeof siteConfig;

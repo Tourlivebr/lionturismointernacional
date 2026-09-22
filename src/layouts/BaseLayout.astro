@@ -25,7 +25,7 @@ const {
   publishedTime,
   modifiedTime,
   noindex = false,
-  keywords: pageKeywords,
+  keywords: pageKeywordList,
 } = Astro.props;
 
 const seo = siteConfig.seo;
@@ -36,7 +36,7 @@ const pageDescription = description || seo.description;
 const pageCanonical = canonical || (Astro.url?.href || seo.canonical);
 const pageImage = image ? (image.startsWith('http') ? image : `${seo.siteUrl}${image}`) : `${seo.siteUrl}${seo.ogImage}`;
 const pageKeywords = [
-  ...(pageKeywords ?? []),
+  ...(pageKeywordList ?? []),
   ...seo.keywords,
 ].slice(0, 40).join(', ');
 

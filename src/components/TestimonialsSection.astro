@@ -1,0 +1,446 @@
+---
+import { siteConfig, type Testimonial } from '../config/site';
+
+const sections = siteConfig.sections;
+const testimonials = siteConfig.testimonials;
+const contact = siteConfig.contact;
+
+function starsOf(rating: number) {
+  return Array.from({ length: 5 }, (_, i) => i < rating ? 'full' : i === rating && rating % 1 !== 0 ? 'half' : 'empty');
+}
+
+const avgRating = (
+  testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length
+).toFixed(1).replace('.0', '');
+
+const totalRatingCount = testimonials.length;
+
+const doubleList = [...testimonials, ...testimonials];
+---
+
+<section id="depoimentos" class="relative overflow-hidden bg-dark border-t border-gold-500/10 border-b border-gold-500/10">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 opacity-60"
+    style="background-image:
+      radial-gradient(ellipse 60% 40% at 15% 0%, rgb(229 160 26 / 0.10), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 85% 100%, rgb(229 160 26 / 0.08), transparent 70%);"
+  />
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-gold-500/20 to-transparent"
+  />
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-gold-500/20 to-transparent"
+  />
+
+  <div class="container relative mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-18 lg:py-24">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="inline-flex items-center gap-3 mb-5">
+        <span class="w-10 h-px bg-gradient-to-r from-transparent to-gold-400"></span>
+        <span class="text-gold-400 tracking-[0.35em] text-[0.7rem] sm:text-xs font-semibold uppercase">
+          {sections.testimonialsEyebrow}
+        </span>
+        <span class="w-10 h-px bg-gradient-to-l from-transparent to-gold-400"></span>
+      </div>
+
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-[2.85rem] font-bold leading-tight text-white">
+        {sections.testimonialsTitle.split(' ').map((w, i) =>
+          i === sections.testimonialsTitle.split(' ').length - 1
+            ? (<span class="bg-gradient-to-r from-gold-200 via-gold-400 to-gold-600 bg-clip-text text-transparent">{w}</span>)
+            : `${w} `
+        )}
+      </h2>
+
+      <p class="mt-5 text-white/70 text-base sm:text-lg leading-relaxed">
+        {sections.testimonialsSubtitle}
+      </p>
+
+      <div class="mt-7 inline-flex items-center gap-4 sm:gap-6 rounded-full border border-gold-500/25 bg-dark/70 backdrop-blur px-5 py-3">
+        <div class="flex items-center gap-1" aria-label={`Avaliação média de ${avgRating} de 5 estrelas`}>
+          {[...new Array(5)].map((_, i) => (
+            <svg
+              key={i}
+              class={`w-4 h-4 sm:w-5 sm:h-5 ${i < Math.round(Number(avgRating)) ? 'text-gold-400 drop-shadow-gold' : 'text-white/15'}`}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 2l2.95 6.82L22 9.68l-5.5 4.78L18.18 22 12 18.27 5.82 22l1.68-7.54L2 9.68l7.05-.86L12 2z" />
+            </svg>
+          ))}
+        </div>
+        <div class="h-8 w-px bg-gold-500/20"></div>
+        <div class="text-left">
+          <div class="text-white font-bold text-base sm:text-lg leading-none">
+            {avgRating}
+            <span class="text-gold-400 font-medium text-xs ml-1">/ 5.0</span>
+          </div>
+          <div class="text-white/50 text-[0.7rem] sm:text-[0.75rem] mt-1">
+            com base em {totalRatingCount} histórias · {sections.testimonialsBadge}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 sm:mt-16">
+      <p class="hidden sm:flex items-center justify-center gap-2 mb-5 text-white/45 text-[0.75rem] tracking-[0.22em] uppercase">
+        <span class="w-8 h-px bg-gold-500/25"></span>
+        Arraste para navegar ↔
+        <span class="w-8 h-px bg-gold-500/25"></span>
+      </p>
+
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 lg:w-32 z-10"
+          style="background-image: linear-gradient(to right, rgb(13 13 13) 0%, rgba(13,13,13,0.88) 40%, rgba(13,13,13,0) 100%);"
+        />
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 lg:w-32 z-10"
+          style="background-image: linear-gradient(to left, rgb(13 13 13) 0%, rgba(13,13,13,0.88) 40%, rgba(13,13,13,0) 100%);"
+        />
+
+        <button
+          type="button"
+          id="testimonials-prev"
+          class="group/btn absolute left-3 sm:left-6 lg:left-10 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gold-500/35 bg-dark/70 backdrop-blur-sm flex items-center justify-center text-gold-400 hover:text-white hover:border-gold-400 hover:bg-gold-500/10 hover:scale-105 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_8px_26px_-10px_rgba(0,0,0,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/80"
+          aria-label="Depoimento anterior"
+        >
+          <svg class="w-[18px] h-[18px] sm:w-5 sm:h-5 transition-transform group-hover/btn:-translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          id="testimonials-next"
+          class="group/btn absolute right-3 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gold-500/35 bg-dark/70 backdrop-blur-sm flex items-center justify-center text-gold-400 hover:text-white hover:border-gold-400 hover:bg-gold-500/10 hover:scale-105 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_8px_26px_-10px_rgba(0,0,0,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/80"
+          aria-label="Próximo depoimento"
+        >
+          <svg class="w-[18px] h-[18px] sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+
+        <div
+          id="testimonials-track-wrapper"
+          class="relative -mx-4 sm:-mx-6 lg:-mx-8 overflow-x-auto no-scrollbar snap-x py-2 sm:py-3 lg:py-4"
+        >
+        <div
+          id="testimonials-track"
+          class="flex flex-nowrap items-stretch gap-5 sm:gap-6 px-4 sm:px-6 lg:px-8 py-2"
+          style="width: max-content;"
+        >
+          {doubleList.map((t: Testimonial, idx: number) => {
+            const realIdx = idx % testimonials.length;
+            const isFeatured = realIdx === 0;
+            return (
+              <article
+                data-index={realIdx}
+                data-slide={idx}
+                class={`group relative shrink-0 snap-start bg-dark-3/60 backdrop-blur-sm border rounded-2xl p-6 sm:p-7 transition-all duration-300 w-[85vw] sm:w-[440px] lg:w-[448px] h-full flex flex-col ${
+                  isFeatured
+                    ? 'border-gold-400/40 shadow-[0_0_40px_-12px_rgba(229,160,26,0.35)] hover:-translate-y-0.5'
+                    : 'border-white/5 hover:border-gold-500/25 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-18px_rgba(229,160,26,0.25)]'
+                }`}
+                itemscope
+                itemtype="https://schema.org/Review"
+              >
+                {isFeatured && (
+                  <div
+                    aria-hidden="true"
+                    class="absolute -top-px left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-gold-400 to-transparent"
+                  />
+                )}
+
+                <div class="flex items-start justify-between gap-4 mb-5">
+                  <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div class="relative shrink-0">
+                      <div class="absolute -inset-0.5 rounded-full bg-gradient-to-br from-gold-200 via-gold-500 to-gold-700 opacity-80 blur-[1px]"></div>
+                      <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-dark p-[2px]">
+                        <img
+                          src={t.avatar}
+                          alt={`Foto de ${t.name} — ${t.location}`}
+                          loading="lazy"
+                          decoding="async"
+                          class="w-full h-full rounded-full object-cover"
+                          itemprop="image"
+                        />
+                      </div>
+                    </div>
+                    <div class="min-w-0">
+                      <p class="font-serif text-white text-[1.05rem] sm:text-lg font-semibold leading-tight truncate" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">{t.name}</span>
+                      </p>
+                      <p class="text-white/55 text-[0.8rem] sm:text-[0.85rem] truncate">
+                        {t.role} · <span class="text-white/45">{t.location}</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <span
+                    class="shrink-0 inline-flex items-center gap-1 rounded-full border border-gold-500/30 bg-gold-500/5 px-2.5 py-1 text-[0.68rem] sm:text-[0.72rem] font-semibold uppercase tracking-wider text-gold-300"
+                    itemprop="about"
+                  >
+                    <span class="w-1.5 h-1.5 rounded-full bg-gold-400 shadow-[0_0_6px_rgba(229,160,26,0.8)]"></span>
+                    {t.category}
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1 mb-4" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                  <meta itemprop="ratingValue" content={String(t.rating)} />
+                  <meta itemprop="bestRating" content="5" />
+                  <meta itemprop="worstRating" content="1" />
+                  {starsOf(t.rating).map((state, i) =>
+                    state === 'full' ? (
+                      <svg key={i} class="w-[1.05rem] h-[1.05rem] text-gold-400 drop-shadow-gold" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2l2.95 6.82L22 9.68l-5.5 4.78L18.18 22 12 18.27 5.82 22l1.68-7.54L2 9.68l7.05-.86L12 2z" />
+                      </svg>
+                    ) : (
+                      <svg key={i} class="w-[1.05rem] h-[1.05rem] text-white/12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2l2.95 6.82L22 9.68l-5.5 4.78L18.18 22 12 18.27 5.82 22l1.68-7.54L2 9.68l7.05-.86L12 2z" />
+                      </svg>
+                    )
+                  )}
+                  <span class="ml-2 text-white/35 text-[0.72rem] font-medium">{t.date}</span>
+                </div>
+
+                {t.highlight && (
+                  <p class="font-serif text-[1.05rem] sm:text-[1.15rem] text-gold-200 leading-snug mb-3">
+                    “{t.highlight}”
+                  </p>
+                )}
+
+                <p class="text-white/75 text-[0.95rem] sm:text-[1rem] leading-relaxed flex-1" itemprop="reviewBody">
+                  {t.quote}
+                </p>
+
+                <div class="mt-6 pt-5 border-t border-white/5 flex items-center justify-between gap-4">
+                  <div class="flex -space-x-2" aria-hidden="true">
+                    {[0, 1, 2].map((k) => {
+                      const other = testimonials[(realIdx + 1 + k) % testimonials.length];
+                      return (
+                        <div
+                          key={k}
+                          class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-dark bg-dark p-[2px]"
+                        >
+                          <img
+                            src={other.avatar}
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            class="w-full h-full rounded-full object-cover opacity-85"
+                          />
+                        </div>
+                      );
+                    })}
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-dark bg-gradient-to-br from-gold-300 to-gold-600 flex items-center justify-center text-[0.62rem] sm:text-[0.7rem] font-bold text-dark">
+                      +{Math.max(20, testimonials.length * 11)}
+                    </div>
+                  </div>
+
+                  <a
+                    href={contact.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="inline-flex items-center gap-1.5 text-xs sm:text-[0.8rem] font-semibold uppercase tracking-wider text-gold-400 hover:text-gold-200 transition-colors group/link"
+                  >
+                    Ver mais
+                    <svg
+                      class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        </div>
+      </div>
+
+      <div class="mt-7 flex items-center justify-center gap-2" role="tablist" aria-label="Paginação de depoimentos">
+        {testimonials.map((_, i) => (
+          <button
+            type="button"
+            key={i}
+            role="tab"
+            aria-label={`Ir para depoimento ${i + 1}`}
+            aria-selected={i === 0}
+            data-dot={i}
+            class="h-1.5 rounded-full transition-all duration-300 data-[active=true]:w-10 data-[active=true]:bg-gradient-to-r from-gold-300 via-gold-500 to-gold-600 data-[active=true]:shadow-[0_0_12px_rgba(229,160,26,0.6)] data-[active=false]:w-2.5 data-[active=false]:bg-white/15 data-[active=false]:hover:bg-white/30"
+          />
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-14 sm:mt-18 max-w-4xl mx-auto">
+      <div
+        class="relative rounded-3xl overflow-hidden border border-gold-500/30 bg-gradient-to-br from-dark-2/90 via-dark-3/80 to-dark/90 backdrop-blur px-6 py-8 sm:px-10 sm:py-10 text-center"
+        style="box-shadow: 0 20px 70px -24px rgba(229, 160, 26, 0.35);"
+      >
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-gold-500/15 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-gold-600/10 blur-3xl"
+        />
+
+        <p class="inline-flex items-center gap-2 text-gold-300 font-semibold tracking-wide text-xs sm:text-sm uppercase mb-3 relative">
+          <span class="w-2 h-2 rounded-full bg-gold-400 shadow-[0_0_12px_rgba(229,160,26,0.8)] animate-pulse"></span>
+          Atendimento WhatsApp agora
+        </p>
+        <h3 class="relative font-serif text-2xl sm:text-3xl lg:text-[2.15rem] text-white leading-tight">
+          Quer viver <span class="bg-gradient-to-r from-gold-200 via-gold-400 to-gold-600 bg-clip-text text-transparent">sua história</span> com a Lion?
+        </h3>
+        <p class="relative mt-4 text-white/65 text-base sm:text-lg max-w-2xl mx-auto">
+          Atendimento pessoal direto por WhatsApp — montamos seu roteiro, condições e pacote de acordo com seu perfil.
+        </p>
+        <div class="relative mt-7 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <a
+            href={contact.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-2"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.33 4.97L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.23h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.19 3.04 14.7 2 12.04 2zm5.82 14.2c-.23.65-1.34 1.25-1.88 1.33-.49.07-1.1.1-1.76-.11-.41-.13-.93-.3-1.6-.59-2.8-1.21-4.62-4.18-4.76-4.38-.14-.2-1.16-1.55-1.16-2.96 0-1.4.74-2.09 1-2.37.27-.28.58-.35.78-.35h.55c.18 0 .42-.07.66.5.24.58.81 2 .89 2.15.07.15.12.33.02.53-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.14-.3.3-.13.58.17.29.76 1.25 1.63 2.02 1.12.99 2.07 1.3 2.37 1.45.3.14.48.12.65-.07.18-.19.75-.87.95-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.7-.17 1.35z" />
+            </svg>
+            Chamar no WhatsApp
+          </a>
+          <a
+            href="#contato"
+            class="btn-gold-outline w-full sm:w-auto inline-flex items-center justify-center gap-2"
+          >
+            Solicitar atendimento
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<script>
+  (() => {
+    const wrapper = document.getElementById('testimonials-track-wrapper') as HTMLElement | null;
+    const track = document.getElementById('testimonials-track') as HTMLElement | null;
+    const prevBtn = document.getElementById('testimonials-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('testimonials-next') as HTMLButtonElement | null;
+    if (!wrapper || !track) return;
+
+    const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
+    const totalUnique = new Set(slides.map((s) => s.getAttribute('data-index'))).size;
+    if (!totalUnique) return;
+
+    // getComputedStyle for gap
+    const slideEl = slides[0];
+    const gapPx = () => Number.parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0') || 24;
+
+    const slideStep = () => slideEl.getBoundingClientRect().width + gapPx();
+
+    // ------------ auto-scroll (infinite loop through the doubled list) ------------
+    let rafId = 0;
+    let velocityPxPerSec = 24;
+    let lastT = 0;
+    let isPaused = false;
+    let active = 0;
+    const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-dot]'));
+
+    const setActive = (i: number) => {
+      active = (i + totalUnique) % totalUnique;
+      dots.forEach((d, idx) => {
+        const on = idx === active;
+        d.setAttribute('data-active', String(on));
+        d.setAttribute('aria-selected', String(on));
+      });
+    };
+    setActive(0);
+
+    const wrap = () => {
+      const half = slideStep() * totalUnique;
+      if (wrapper.scrollLeft >= half * 1.99) wrapper.scrollLeft -= half;
+      else if (wrapper.scrollLeft <= 0) wrapper.scrollLeft += half;
+    };
+
+    const recalcActive = () => {
+      const step = slideStep();
+      const pos = wrapper.scrollLeft + wrapper.clientWidth * 0.2;
+      const idx = Math.round(pos / step) % totalUnique;
+      setActive(idx);
+    };
+
+    const tick = (t: number) => {
+      if (!lastT) lastT = t;
+      const dt = (t - lastT) / 1000;
+      lastT = t;
+      if (!isPaused) {
+        wrapper.scrollLeft += velocityPxPerSec * dt;
+        wrap();
+      }
+      recalcActive();
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    // ------------ pause on hover, focus, touch ------------
+    const pause = () => { isPaused = true; };
+    const resume = () => { isPaused = false; lastT = 0; };
+
+    track.addEventListener('mouseenter', pause, { passive: true });
+    track.addEventListener('mouseleave', resume, { passive: true });
+    track.addEventListener('touchstart', pause, { passive: true });
+    track.addEventListener('touchend', resume, { passive: true });
+    track.addEventListener('focusin', pause);
+    track.addEventListener('focusout', resume);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { pause(); rafId && cancelAnimationFrame(rafId); }
+      else { lastT = 0; rafId = requestAnimationFrame(tick); resume(); }
+    });
+
+    // ------------ manual buttons: smooth scroll ------------
+    const scrollByOne = (dir: 1 | -1) => {
+      const step = slideStep();
+      wrapper.scrollBy({ left: dir * step, behavior: 'smooth' });
+    };
+
+    prevBtn?.addEventListener('click', () => scrollByOne(-1));
+    nextBtn?.addEventListener('click', () => scrollByOne(1));
+
+    // ------------ dots ------------
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        const step = slideStep();
+        const target = step * idx;
+        // Pick the nearest copy (avoid huge jumps when near the seam)
+        const current = wrapper.scrollLeft;
+        const half = step * totalUnique;
+        const candidates = [target - half, target, target + half];
+        let best = candidates[0];
+        let bestDist = Math.abs(current - best);
+        for (const c of candidates) {
+          const d = Math.abs(current - c);
+          if (d < bestDist) { bestDist = d; best = c; }
+        }
+        wrapper.scrollTo({ left: best, behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
