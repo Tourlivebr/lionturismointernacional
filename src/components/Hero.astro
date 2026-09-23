@@ -3,7 +3,7 @@ import { siteConfig } from '../config/site';
 import Icons from './Icons.astro';
 ---
 
-<section id="hero" class="relative min-h-[calc(100vh-6rem)] lg:min-h-screen flex items-end overflow-hidden bg-black">
+<section id="hero" class="relative min-h-[55vh] sm:min-h-[70vh] lg:min-h-[75vh] flex items-center overflow-hidden bg-black">
   <img
     src={siteConfig.hero.backgroundImage}
     alt="Lion Turismo Internacional - Gramado e Serra Gaúcha"
@@ -80,59 +80,27 @@ import Icons from './Icons.astro';
     </svg>
   </div>
 
-  <div class="container-page relative z-10 pb-20 pt-12 md:pb-28 lg:pb-36">
+  <div class="container-page relative z-10 pb-6 pt-6 md:pt-10 md:pb-14 lg:pt-16 lg:pb-18">
     <div class="max-w-3xl">
-      <div class="flex items-center gap-4 mb-8 md:mb-10">
+      <div class="flex items-center gap-4 mb-4 md:mb-5">
         <span class="text-gold-300 text-xs md:text-sm tracking-[0.35em] uppercase font-semibold">
           {siteConfig.hero.eyebrow}
         </span>
         <span class="h-[2px] w-16 md:w-24 bg-gradient-to-r from-gold-400/90 via-gold-400/60 to-transparent"></span>
       </div>
 
-      <h1 class="font-serif font-bold text-white leading-[0.95] mb-8">
-        <span class="block text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[5.6rem] tracking-tight">
+      <h1 class="font-serif font-bold text-white leading-[0.95] mb-4 md:mb-5">
+        <span class="block text-[2.2rem] sm:text-5xl md:text-6xl lg:text-[4.6rem] tracking-tight">
           {siteConfig.hero.titlePrimary}
         </span>
-        <span class="block text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[5.6rem] tracking-tight text-gradient-gold">
+        <span class="block text-[2.2rem] sm:text-5xl md:text-6xl lg:text-[4.6rem] tracking-tight text-gradient-gold">
           {siteConfig.hero.titleSecondary}
         </span>
       </h1>
 
-      <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mb-10 md:mb-12">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl">
         {siteConfig.hero.subtitle}
       </p>
-
-      <div class="flex flex-col sm:flex-row gap-4 md:gap-5 mb-10 md:mb-14">
-        <a
-          href={siteConfig.hero.ctaPrimary.link}
-          class="btn btn-gold !px-8 !py-4 md:!py-3.5 text-sm md:text-base rounded-md uppercase tracking-[0.12em]"
-        >
-          {siteConfig.hero.ctaPrimary.label}
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-          </svg>
-        </a>
-        <a
-          href={siteConfig.hero.ctaSecondary.link}
-          class="btn btn-gold-outline !px-8 !py-4 md:!py-3.5 text-sm md:text-base rounded-md uppercase tracking-[0.12em]"
-        >
-          {siteConfig.hero.ctaSecondary.label}
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-          </svg>
-        </a>
-      </div>
-
-      <ul class="flex flex-wrap items-center gap-x-6 gap-y-3">
-        {siteConfig.hero.features.map((feature, i) => (
-          <li class="flex items-center gap-3" key={feature}>
-            <span class="text-gray-200/90 text-sm md:text-base">{feature}</span>
-            {i < siteConfig.hero.features.length - 1 && (
-              <span class="w-1.5 h-1.5 rounded-full bg-gold-400" aria-hidden="true"></span>
-            )}
-          </li>
-        ))}
-      </ul>
     </div>
   </div>
 

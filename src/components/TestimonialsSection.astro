@@ -9,12 +9,6 @@ function starsOf(rating: number) {
   return Array.from({ length: 5 }, (_, i) => i < rating ? 'full' : i === rating && rating % 1 !== 0 ? 'half' : 'empty');
 }
 
-const avgRating = (
-  testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length
-).toFixed(1).replace('.0', '');
-
-const totalRatingCount = testimonials.length;
-
 const doubleList = [...testimonials, ...testimonials];
 ---
 
@@ -56,32 +50,6 @@ const doubleList = [...testimonials, ...testimonials];
       <p class="mt-5 text-white/70 text-base sm:text-lg leading-relaxed">
         {sections.testimonialsSubtitle}
       </p>
-
-      <div class="mt-7 inline-flex items-center gap-4 sm:gap-6 rounded-full border border-gold-500/25 bg-dark/70 backdrop-blur px-5 py-3">
-        <div class="flex items-center gap-1" aria-label={`Avaliação média de ${avgRating} de 5 estrelas`}>
-          {[...new Array(5)].map((_, i) => (
-            <svg
-              key={i}
-              class={`w-4 h-4 sm:w-5 sm:h-5 ${i < Math.round(Number(avgRating)) ? 'text-gold-400 drop-shadow-gold' : 'text-white/15'}`}
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M12 2l2.95 6.82L22 9.68l-5.5 4.78L18.18 22 12 18.27 5.82 22l1.68-7.54L2 9.68l7.05-.86L12 2z" />
-            </svg>
-          ))}
-        </div>
-        <div class="h-8 w-px bg-gold-500/20"></div>
-        <div class="text-left">
-          <div class="text-white font-bold text-base sm:text-lg leading-none">
-            {avgRating}
-            <span class="text-gold-400 font-medium text-xs ml-1">/ 5.0</span>
-          </div>
-          <div class="text-white/50 text-[0.7rem] sm:text-[0.75rem] mt-1">
-            com base em {totalRatingCount} histórias · {sections.testimonialsBadge}
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="mt-12 sm:mt-16">
@@ -249,52 +217,6 @@ const doubleList = [...testimonials, ...testimonials];
             class="h-1.5 rounded-full transition-all duration-300 data-[active=true]:w-10 data-[active=true]:bg-gradient-to-r from-gold-300 via-gold-500 to-gold-600 data-[active=true]:shadow-[0_0_12px_rgba(229,160,26,0.6)] data-[active=false]:w-2.5 data-[active=false]:bg-white/15 data-[active=false]:hover:bg-white/30"
           />
         ))}
-      </div>
-    </div>
-
-    <div class="mt-14 sm:mt-18 max-w-4xl mx-auto">
-      <div
-        class="relative rounded-3xl overflow-hidden border border-gold-500/30 bg-gradient-to-br from-dark-2/90 via-dark-3/80 to-dark/90 backdrop-blur px-6 py-8 sm:px-10 sm:py-10 text-center"
-        style="box-shadow: 0 20px 70px -24px rgba(229, 160, 26, 0.35);"
-      >
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-gold-500/15 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-gold-600/10 blur-3xl"
-        />
-
-        <p class="inline-flex items-center gap-2 text-gold-300 font-semibold tracking-wide text-xs sm:text-sm uppercase mb-3 relative">
-          <span class="w-2 h-2 rounded-full bg-gold-400 shadow-[0_0_12px_rgba(229,160,26,0.8)] animate-pulse"></span>
-          Atendimento WhatsApp agora
-        </p>
-        <h3 class="relative font-serif text-2xl sm:text-3xl lg:text-[2.15rem] text-white leading-tight">
-          Quer viver <span class="bg-gradient-to-r from-gold-200 via-gold-400 to-gold-600 bg-clip-text text-transparent">sua história</span> com a Lion?
-        </h3>
-        <p class="relative mt-4 text-white/65 text-base sm:text-lg max-w-2xl mx-auto">
-          Atendimento pessoal direto por WhatsApp — montamos seu roteiro, condições e pacote de acordo com seu perfil.
-        </p>
-        <div class="relative mt-7 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <a
-            href={contact.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-2"
-          >
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.33 4.97L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.23h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.19 3.04 14.7 2 12.04 2zm5.82 14.2c-.23.65-1.34 1.25-1.88 1.33-.49.07-1.1.1-1.76-.11-.41-.13-.93-.3-1.6-.59-2.8-1.21-4.62-4.18-4.76-4.38-.14-.2-1.16-1.55-1.16-2.96 0-1.4.74-2.09 1-2.37.27-.28.58-.35.78-.35h.55c.18 0 .42-.07.66.5.24.58.81 2 .89 2.15.07.15.12.33.02.53-.1.2-.15.32-.3.49-.15.17-.31.38-.45.51-.15.14-.3.3-.13.58.17.29.76 1.25 1.63 2.02 1.12.99 2.07 1.3 2.37 1.45.3.14.48.12.65-.07.18-.19.75-.87.95-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.29.15.49.22.56.34.07.12.07.7-.17 1.35z" />
-            </svg>
-            Chamar no WhatsApp
-          </a>
-          <a
-            href="#contato"
-            class="btn-gold-outline w-full sm:w-auto inline-flex items-center justify-center gap-2"
-          >
-            Solicitar atendimento
-          </a>
-        </div>
       </div>
     </div>
   </div>
